@@ -1,0 +1,6 @@
+@MasjidLocatorAPI_HostAddress = http://localhost:5074
+
+GET {{MasjidLocatorAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
