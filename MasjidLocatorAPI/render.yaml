@@ -1,0 +1,10 @@
+﻿services:
+  - type: web
+    name: office-scheduler-api
+    plan: free
+    runtime: docker
+    dockerfilePath: Dockerfile
+
+databases:
+  - name: masjid_locator
+    plan: free
