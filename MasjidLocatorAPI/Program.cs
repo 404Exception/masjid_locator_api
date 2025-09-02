@@ -1,4 +1,4 @@
-using MasjidLocatorAPI.Data;
+﻿using MasjidLocatorAPI.Data;
 using MasjidLocatorAPI.Model.Entity;
 using MasjidLocatorAPI.Services.Implementation;
 using MasjidLocatorAPI.Services.Interface;
@@ -24,9 +24,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     ));
 
 // Identity
-builder.Services.AddIdentity<UserEntity, IdentityRole<Guid>>()
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
+//builder.Services.AddIdentity<UserEntity, IdentityRole<Guid>>()
+//    .AddEntityFrameworkStores<AppDbContext>()
+//    .AddDefaultTokenProviders();
+
+builder.Services.AddIdentity<UserEntity, IdentityRole<Guid>>(options =>
+{
+    // ↓↓↓ REMOVE ALL PASSWORD VALIDATION RULES ↓↓↓
+    options.Password.RequiredLength = 4;           // Only 4 characters minimum
+    options.Password.RequireDigit = false;         // No digits required
+    options.Password.RequireLowercase = false;     // No lowercase required
+    options.Password.RequireUppercase = false;     // No uppercase required
+    options.Password.RequireNonAlphanumeric = false; // No special chars required
+    options.Password.RequiredUniqueChars = 1;      // Minimal uniqueness
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
 
 // Add JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
